@@ -1,0 +1,1 @@
+This is an example program to demonstrate basic use of NodeJS and SQL
