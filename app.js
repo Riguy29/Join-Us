@@ -1,6 +1,6 @@
 
 // CJS
-const { faker, fakerDA } = require('@faker-js/faker');
+
 
 
 

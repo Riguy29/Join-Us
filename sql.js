@@ -1,5 +1,6 @@
 
 const mysql2 = require('mysql2');
+
 class SQLSingleton{
     constructor() {
         if (!SQLSingleton.instance) {
@@ -9,12 +10,12 @@ class SQLSingleton{
     }
 
     connectToDatabase() {
-    this.connection = mysql2.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'Starwars1!',
-        database: 'join_us',
-    });
+        this.connection = mysql2.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: 'Starwars1!',
+            database: 'join_us',
+        });
     }
 
     closeConnection() {
@@ -38,18 +39,29 @@ class SQLSingleton{
 
 
 module.exports = new SQLSingleton();
-// var bulkFakeData = [];
-// for (let i = 0; i < 500; i++) {
-//     var fakeUserData = { email: faker.internet.email(), created_at: faker.date.past() };
-//     bulkFakeData.push(fakeUserData);
-// };
-// connection.query('INSERT INTO users (email, created_at) VALUES ?', [bulkFakeData.map(user => [user.email, user.created_at])], function (err, results){
-//     if (err) {
-//         console.error('Error inserting data:', err);
-//     } else {
-//         console.log('Inserted rows:', results.affectedRows);
-//     }
-// });
+
+if(require.main === module){
+    //Adds 500 fake users to the database when run directly
+    const { faker, fakerDA } = require('@faker-js/faker');
+    const sql = new SQLSingleton();
+    sql.connectToDatabase();
+
+    var bulkFakeData = [];
+    for (let i = 0; i < 500; i++) {
+        var fakeUserData = { email: faker.internet.email(), created_at: faker.date.past() };
+        bulkFakeData.push(fakeUserData);
+    };
+
+    sql.getConnection().query('INSERT INTO users (email, created_at) VALUES ?', [bulkFakeData.map(user => [user.email, user.created_at])], function (err, results){
+    if (err) {
+        console.error('Error inserting data:', err);
+    } else {
+        console.log('Inserted rows:', results.affectedRows);
+    }
+});
+}
+
+
 
 // connection.query('SELECT * FROM users ORDER BY created_at LIMIT 1', function (err, results){
 //     if (err) {

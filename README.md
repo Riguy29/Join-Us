@@ -1,1 +1,1 @@
-This is an example program to demonstrate basic use of NodeJS and SQL
+This is an example program to demonstrate basic use of NodeJS and SQL to make a simply webpage that takes in a users email and adds to the our database
