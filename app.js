@@ -9,7 +9,8 @@ const app = express();
 const SQL = require('./sql.js');
 const bodyParser = require('body-parser');
 
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
 SQL.connectToDatabase();
 app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
@@ -26,7 +27,7 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.post('/register', (req, res) => {
     var person = {
